@@ -18,7 +18,7 @@
     <body>
         <script type="text/javascript">
             $(document).ready(function() {
-                var socket = io.connect("http://192.168.1.93:5000")
+                var socket = io.connect("http://localhost:5000")
                 socket.on('connect', function() {
                     socket.send('User Connected!');
                 });
@@ -66,7 +66,7 @@
         
         <div id="messages" class="chat"></div>
         <div class="bottom_bar">
-            <!--<input class ="type_field" type="text" name="user_name" id="username" placeholder="Username">-->
+            {% comment %} <input class ="type_field" type="text" name="user_name" id="username" placeholder="Username"> {% endcomment %}
             <input class ="type_field" type="text" name="message" id="message" placeholder="Message">
             <button id="SendBtn" class="send_btn">
                 <i class="fa-solid fa-arrow-right"></i>
