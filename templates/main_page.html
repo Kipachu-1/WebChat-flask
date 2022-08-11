@@ -13,19 +13,19 @@
     <body>
         <script type="text/javascript">
             $(document).ready(function() {
-                var socket = io.connect("http://localhost:5000")
+                var socket = io.connect("http://172.20.10.2:5000")
                 socket.on('connect', function() {
                     socket.send('User Connected!');
                 });
 
                 socket.on('message', function(data) {
                     $('#messages').append($('<p>').text(data));
+                    $('p').css('text-align', 'left');
                 });
 
                 $('#SendBtn').on('click', function() {
                     socket.send($('#username').val() + ': ' + $('#message').val());
                     $('#message').val('');
-
                 });
             })
         </script>
