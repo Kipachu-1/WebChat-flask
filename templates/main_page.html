@@ -31,8 +31,16 @@
                 $('#SendBtn').on('click', function() {
                     socket.send($('#username').val() + ': ' + $('#message').val());
                     $('#message').val('');
-
                 });
+
+                $("#message").keyup(function(event) {
+                    if (event.which === 13) {
+                        $("#SendBtn").click();
+                    }
+                });
+
+
+
             })
         </script>
         <nav class="side_bar">
