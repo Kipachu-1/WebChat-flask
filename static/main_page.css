@@ -8,8 +8,7 @@ p {
     padding: 10px;
     max-width: 500px;
     display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
+    flex-wrap:nowrap;
     align-items: flex-end;
     text-align: left;
 }
