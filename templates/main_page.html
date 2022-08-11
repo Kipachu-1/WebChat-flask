@@ -7,34 +7,70 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="static/main_page.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+        <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+        <script src="https://kit.fontawesome.com/72e393fdc0.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.js" integrity="sha512-9mpsATI0KClwt+xVZfbcf2lJ8IFBAwsubJ6mI3rtULwyM3fBmQFzj0It4tGqxLOGQwGfJdk/G+fANnxfq9/cew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     </head>
     <body>
         <script type="text/javascript">
             $(document).ready(function() {
-                var socket = io.connect("http://172.20.10.2:5000")
+                var socket = io.connect("http://192.168.1.93:5000")
                 socket.on('connect', function() {
                     socket.send('User Connected!');
                 });
 
                 socket.on('message', function(data) {
                     $('#messages').append($('<p>').text(data));
-                    $('p').css('text-align', 'left');
                 });
 
                 $('#SendBtn').on('click', function() {
                     socket.send($('#username').val() + ': ' + $('#message').val());
                     $('#message').val('');
+
                 });
             })
         </script>
-
-
-        <div id="messages"> 
+        <nav class="side_bar">
+            <a href="#" class="top_side_bar"><i class="fa-solid fa-angles-right fa-2x" style="--fa-primary-color: black;"></i></a>
+            <div class="chat_members_side_bar">
+                <ul>
+                    <li class="1_member">
+                        <div class="person_side">
+                            <i class='bx bxs-user-circle'></i>
+                            <h5 class="">Arsen</h5>
+                            <p>asdasdasd</p>
+                        </div>
+                    </li>
+                    <li class="2_member person_side">
+                        <div>
+                            <i class='bx bxs-user-circle'></i>
+                            <h5 class="">Arsen</h5>
+                            <p>asdasdasd</p>
+                        </div>
+                    </li>
+                    <li class="3_member person_side">
+                        <div>
+                            <i class='bx bxs-user-circle'></i>
+                            <h5 class="">Arsen</h5>
+                            <p>asdasdasd</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <a href="" class="bot_side_bar"><i class='bx bxs-brightness'></i></a>
+        </nav>
+        
+        <div id="messages" class="chat"></div>
+        <div class="bottom_bar">
+            <!--<input class ="type_field" type="text" name="user_name" id="username" placeholder="Username">-->
+            <input class ="type_field" type="text" name="message" id="message" placeholder="Message">
+            <button id="SendBtn" class="send_btn">
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
         </div>
-        <input type="text" name="user_name" id="username" placeholder="Username">
-        <input type="text" name="message" id="message" placeholder="Message">
-        <button id="SendBtn">send</button>
     </body>
 </html>
