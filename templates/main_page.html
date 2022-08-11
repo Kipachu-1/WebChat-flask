@@ -25,6 +25,7 @@
 
                 socket.on('message', function(data) {
                     $('#messages').append($('<p>').text(data));
+                    
                 });
 
                 $('#SendBtn').on('click', function() {
