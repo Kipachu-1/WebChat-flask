@@ -1,3 +1,4 @@
+
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
 
@@ -8,9 +9,17 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
+    Username = db.Column(db.String(80), unique=True, nullable=False)
+    Password = db.Column(db.String(120), unique=True, nullable=False)
 
-    def __init__(self, username, email):
-        self.username = username
-        self.email = email
+    def __init__(self, Password, Username):
+        self.Password = Password
+        self.Username = Username
+
+# db.create_all()
+
+
+# new_user = User(Username='Kipachu', Password='230279mm')
+# db.session.add(new_user)
+# db.session.commit()
+

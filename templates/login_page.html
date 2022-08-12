@@ -13,26 +13,88 @@
         <link rel="stylesheet" href="static/login_page.css">
     </head>
     <body>
-        <div class="login-box">
+
+      {% for message in get_flashed_messages() %}
+
+      <div class="warning_msg">
+      <p class="msg_text">{{ message }}</p>
+      </div>
+
+
+
+      {% endfor %}
+
+
+        <div class="login-box box" id='login-box'>
             <h2>Login</h2>
-            <form>
+            <form action="/login" method="POST">
               <div class="user-box">
-                <input type="text" name="" required="">
+                <input type="text" name="Username" required="">
                 <label>Username</label>
               </div>
               <div class="user-box">
-                <input type="password" name="" required="">
+                <input type="password" name="Password" required="">
                 <label>Password</label>
               </div>
-              <a href="#">
+              <a>
                 <span></span>
                 <span></span>
                 <span></span>
                 <span></span>
-                Submit
+                <input type="submit" value="OK" class="submit_word"/>
               </a>
+            
             </form>
+            <button class='btn' id='btn_SignUp'>Sign Up</button>
           </div>
+
+
+
+          <div class="SignUP-box box" id='SignUP-box'>
+            <h2>Sign UP</h2>
+            <form action="/Sign Up" method="POST">
+              <div class="user-box">
+                <input type="text" name="S_Username" required="">
+                <label>Username</label>
+              </div>
+              <div class="user-box">
+                <input type="password" name="S_Password" required="">
+                <label>Password</label>
+              </div>
+              <a>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <input type="submit" value="Sign Up" class="submit_word"/>
+              </a>
+  
+            </form>
+            <button class='btn' id='btn_Login'>Login</button>
+          </div>
+
+
+        <script>
+            let btn_SignUp = document.querySelector("#btn_SignUp");
+            let btn_Login = document.querySelector("#btn_Login");
+            let SignUP_box = document.getElementById('SignUP-box')
+            let login_box = document.getElementById('login-box')
+
+            btn_SignUp.onclick = function(){
+                login_box.style.transform = 'translate(-400%, -50%)'
+                SignUP_box.style.transform = 'translate(-50%, -50%)'
+            }
+
+            btn_Login.onclick = function(){
+              login_box.style.transform = 'translate(-50%, -50%)'
+              SignUP_box.style.transform = 'translate(400%, -50%)'
+          }
+        </script>
+
+
+
+
+
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
