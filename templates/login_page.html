@@ -15,22 +15,23 @@
     <body>
         <div class="login-box">
             <h2>Login</h2>
-            <form>
+            <form action="/login" method="POST">
               <div class="user-box">
-                <input type="text" name="" required="">
+                <input type="text" name="Username" required="">
                 <label>Username</label>
               </div>
               <div class="user-box">
-                <input type="password" name="" required="">
+                <input type="password" name="Password" required="">
                 <label>Password</label>
               </div>
-              <a href="#">
+              <a type="submit" value="submit">
                 <span></span>
                 <span></span>
                 <span></span>
                 <span></span>
                 Submit
               </a>
+              <p><input type="submit" value="submit" /></p>
             </form>
           </div>
         <!--[if lt IE 7]>
