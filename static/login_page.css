@@ -1,5 +1,6 @@
 html {
     height: 100%;
+    overflow: hidden;
   }
 body {
     margin:0;
@@ -8,7 +9,26 @@ body {
     background: linear-gradient(#141e30, #243b55);
   }
   
-.login-box {
+
+.warning_msg {
+  width: 400px;
+  position: absolute;
+  left: 50%;
+  top:20%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 0, 0, 0.705);
+  border-radius: 10px;
+  box-shadow: 1px 0px 15px 0px red;
+}
+
+.msg_text {
+  text-align: center;
+  /* font-family:; */
+  font-size: 20px;
+  color: white;
+}
+
+.box {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -21,18 +41,18 @@ body {
     border-radius: 10px;
   }
   
-.login-box h2 {
+.box h2 {
     margin: 0 0 30px;
     padding: 0;
     color: #fff;
     text-align: center;
   }
   
-.login-box .user-box {
+.box .user-box {
     position: relative;
   }
   
-.login-box .user-box input {
+.box .user-box input {
     width: 100%;
     padding: 10px 0;
     font-size: 16px;
@@ -43,7 +63,7 @@ body {
     outline: none;
     background: transparent;
   }
-.login-box .user-box label {
+.box .user-box label {
     position: absolute;
     top:0;
     left: 0;
@@ -54,15 +74,15 @@ body {
     transition: .5s;
   }
   
-.login-box .user-box input:focus ~ label,
-.login-box .user-box input:valid ~ label {
+.box .user-box input:focus ~ label,
+.box .user-box input:valid ~ label {
     top: -20px;
     left: 0;
     color: #03e9f4;
     font-size: 12px;
   }
   
-.login-box form a {
+.box form a {
     position: relative;
     display: inline-block;
     padding: 10px 20px;
@@ -76,7 +96,7 @@ body {
     letter-spacing: 4px
   }
   
-.login-box a:hover {
+.box a:hover {
     background: #03e9f4;
     color: #fff;
     border-radius: 5px;
@@ -86,12 +106,12 @@ body {
                 0 0 100px #03e9f4;
   }
   
-.login-box a span {
+.box a span {
     position: absolute;
     display: block;
   }
   
-.login-box a span:nth-child(1) {
+.box a span:nth-child(1) {
     top: 0;
     left: -100%;
     width: 100%;
@@ -109,7 +129,7 @@ body {
     }
   }
   
-.login-box a span:nth-child(2) {
+.box a span:nth-child(2) {
     top: -100%;
     right: 0;
     width: 2px;
@@ -128,7 +148,7 @@ body {
     }
 }
   
-.login-box a span:nth-child(3) {
+.box a span:nth-child(3) {
     bottom: 0;
     right: -100%;
     width: 100%;
@@ -147,7 +167,7 @@ body {
     }
   }
   
-.login-box a span:nth-child(4) {
+.box a span:nth-child(4) {
     bottom: -100%;
     left: 0;
     width: 2px;
@@ -173,7 +193,27 @@ body {
   height: 19.4px;
   font-size: 20px;
   color: white;
-  padding: 0;
-  z-index: 1000;
 }
   
+
+::-ms-reveal {
+  filter: invert(100%);
+}
+.box {
+  transition: 0.4s;
+}
+
+.SignUP-box {
+  transform: translate(400%, -50%);
+}
+
+.btn {
+  position: absolute;
+  right: 50px;
+  bottom: 50px;
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 22px;
+}
+

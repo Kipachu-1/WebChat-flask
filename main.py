@@ -1,4 +1,5 @@
-from flask import Flask, request, render_template, url_for, redirect
+from distutils.log import debug
+from flask import Flask, request, render_template, url_for, redirect, flash
 from flask_socketio import SocketIO, send
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
@@ -6,7 +7,7 @@ from Base import *
 
 
 app = Flask(__name__)
-app.config['SECRET KEY'] = 'secret123'
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 socketio = SocketIO(app, cors_allowed_origins='*')
@@ -35,7 +36,7 @@ def login():
             else:
                 return redirect('/wrong')
         except:
-            return redirect('/wrong')
+            flash('Invalid email or password', 'warning')
         
     return render_template('login_page.html')
             
@@ -53,5 +54,5 @@ def main_page():
     return render_template('main_page.html')
 
 if __name__ == '__main__':
-    socketio.run(app, host='localhost')
+    socketio.run(app, host='localhost', debug=True)
     
