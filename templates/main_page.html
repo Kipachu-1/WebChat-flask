@@ -44,7 +44,7 @@
             })
         </script>
         <nav class="side_bar">
-            <a href="#" class="top_side_bar"><i class="fa-solid fa-angles-right fa-2x" style="--fa-primary-color: black;"></i></a>
+            <a href="#" class="top_side_bar" id="btn"><i class="fa-solid fa-angles-right fa-2x" ></i></a>
             <div class="chat_members_side_bar">
                 <ul>
                     <li class="1_member">
@@ -70,7 +70,7 @@
                     </li>
                 </ul>
             </div>
-            <a href="" class="bot_side_bar"><i class='bx bxs-brightness'></i></a>
+            <a href="" class="bot_side_bar"><i class='bx bxs-brightness bx-lg'></i></a>
         </nav>
         
         <div id="messages" class="chat"></div>
@@ -81,5 +81,13 @@
                 <i class="fa-solid fa-arrow-right"></i>
             </button>
         </div>
+        <script>
+            let btn = document.querySelector("#btn");
+            let side_bar = document.querySelector(".side_bar");
+            
+            btn.onclick = function(){
+                side_bar.classList.toggle("active");
+            }
+        </script>
     </body>
 </html>
