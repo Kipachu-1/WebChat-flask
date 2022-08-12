@@ -84,7 +84,7 @@ ul{
     "avatar name"
     "avatar message";
     justify-content: start;
-    border-radius: 0;
+    border-radius: 30px;
     padding-right: 5px;
 }
 .person_flashcard:hover{
@@ -94,8 +94,8 @@ ul{
     grid-area: avatar;
     
 }
-.sideB_name ,.sideB_message{
-    margin: 0;
+.sideB_name ,.sideB_message,.search_input{
+    margin: 0px;
     padding: 0;
     border-radius: 0;
     background-color: transparent;
@@ -111,11 +111,92 @@ ul{
 .sideB_message{
     grid-area: message;
     height: 20px;
-    padding-top: 20px;
+    padding-top: 10px;
     font-size: 13px;
-    
-    
 }
 .top_side_bar{
     margin-left: 7px;
 }
+
+
+
+
+.sideB_search {
+    margin:0 auto;
+    margin-right: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 300px;
+    height: 60px;
+}
+.search_icon {
+    position: absolute;
+    color: white;
+    transition: all 0.8s ease;
+}
+.search_icon.active{
+    color: transparent;
+    
+}
+
+
+
+.search_input {
+    position: absolute;
+    font-family: 'Inconsolata', monospace;
+    margin:0 auto;
+    top: 40px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 50px;
+    outline: none;
+    border: none;
+ border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    background: #B6CCFE;
+    color: white;
+    text-shadow: 0 0 10px #B6CCFE;
+    padding: 0;
+    padding-left: 10px;
+    border-radius: 30px;
+    transition: all 1s;
+    opacity: 0;
+    z-index: 5;
+    font-weight: bolder;
+    letter-spacing: 0.1em;}
+    .search_input:hover {
+        cursor: pointer;
+      }
+      .search_input:focus {
+        width: 280px;
+        opacity: 1;
+        cursor: text;
+      }
+      .search_input:focus ~ .search {
+        right: -250px;
+        background: #151515;
+        z-index: 6;
+      }
+        .search_input::before {
+          top: 0;
+          left: 0;
+          width: 25px;
+        }
+        .search_input::after {
+          top: 0;
+          left: 0;
+          width: 25px;
+          height: 2px;
+          border: none;
+          background: white;
+          border-radius: 0%;
+          transform: rotate(-45deg);
+        }
+      .search_input::placeholder {
+        color: white;
+        opacity: 0.5;
+        font-weight: bolder;
+      }

@@ -45,6 +45,11 @@
         </script>
         <nav class="side_bar">
             <a href="#" class="top_side_bar" id="btn"><i class="fa-solid fa-angles-right fa-2x" ></i></a>
+            <div class="sideB_search">
+                <i class='bx bx-search-alt bx-md search_icon'></i>
+                <input class="search_input" id="input_side_bar" type="text"  placeholder="Search...">
+                
+            </div>
             <div class="chat_members_side_bar">
                 <ul>
                     <li class="1_member">
@@ -84,10 +89,16 @@
         <script>
             let btn = document.querySelector("#btn");
             let side_bar = document.querySelector(".side_bar");
+            let search_btn = document.querySelector(".search_input");
+            let search_field = document.querySelector(".search_icon");
             
             btn.onclick = function(){
                 side_bar.classList.toggle("active");
+                search_field.classList.toggle("active");
+                search_btn.classList.toggle("active");
+                document.getElementById("input_side_bar").focus();
             }
+            
         </script>
     </body>
 </html>
