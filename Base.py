@@ -10,8 +10,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     Username = db.Column(db.String(80), unique=True, nullable=False)
-    Password = db.Column(db.String(120), unique=True, nullable=False)
-
+    Password = db.Column(db.String(120), unique=True, nullable=False)  
+    
+    
     def __init__(self, Password, Username):
         self.Password = Password
         self.Username = Username
