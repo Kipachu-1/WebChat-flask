@@ -1,6 +1,7 @@
 
 body {
   overflow: hidden; margin: 0; padding: 0;
+  
 }
 
 canvas { 
@@ -49,7 +50,7 @@ svg {
   
   
 body {
-    background-color: transparent;
+    background-color: black;
     color: #606468;
     font-family: 'Open Sans', sans-serif;
     font-size: 14px;
