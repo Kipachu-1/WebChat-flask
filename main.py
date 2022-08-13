@@ -54,5 +54,5 @@ def main_page():
     return render_template('main_page.html')
 
 if __name__ == '__main__':
-    socketio.run(app, host='localhost', debug=True)
+    socketio.run(app, host='172.20.10.2', debug=True)
     
