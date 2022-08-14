@@ -20,7 +20,6 @@
         <link rel="stylesheet" href="static/login_page2.css">
     </head>
     <body>
-        <canvas id="test"></canvas>
 
         {% with messages = get_flashed_messages() %}
                 {% if messages %}
@@ -29,9 +28,8 @@
             {% endfor %}
              {% endif %}
                 {% endwith %}
-
-
-        <div class="grid">
+        <canvas id="test"></canvas>
+        <div class="grid grid1">
 
             <form action="/login" method="POST" class="form login">
                 <div class="form__field">

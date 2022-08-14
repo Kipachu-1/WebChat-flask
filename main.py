@@ -47,8 +47,10 @@ def login():
                 flash('Invalid email or password', 'warning')
         except:
             flash('Invalid email or password', 'warning')
-        
     return render_template('login_page2.html')
+
+
+@app.route('/SignUp', methods=)
 
 
 @app.route('/logout')
