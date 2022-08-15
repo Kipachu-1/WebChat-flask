@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, url_for, redirect, flash, session
-from flask_socketio import SocketIO, send
+from flask_socketio import SocketIO, send, emit
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_required, logout_user, login_user, UserMixin, current_user
 from Base import *
@@ -26,8 +26,25 @@ def load_user(user_id):
 @socketio.on('message')
 def handle_message(message):
     print('received message:' + message)
+    msg = Global_msgs(Message=message)
+    db.session.add(msg)
+    db.session.commit()
     if message != 'User Connected!':
         send(message=message, broadcast=True)
+
+
+
+@socketio.on('another channel')
+def handle_my_custom_event(message):
+    emit(message, namespace='/chat')
+    
+@app.route('/chat')
+def chat_page():
+    return render_template('chat_page.html')
+
+
+
+
 
 
 
@@ -69,9 +86,9 @@ def SignUp():
     return render_template('SignUp_page.html')
 
 
-@app.route('/')
-def intro_page():
-    return render_template()
+# @app.route('/')
+# def intro_page():
+#     return render_template()
 
 
 
@@ -99,10 +116,6 @@ def res_page():
 def arse():
     return render_template('assa.html')
 
-
-@app.route('/')
-def smt():
-    return 'it is the beginning, bro'
             
             
 @app.route('/wrong')
@@ -110,11 +123,12 @@ def wrong():
     return 'wrong pass or username!'            
                   
 
-@app.route('/home')
-@login_required
+@app.route('/')
+# @login_required
 def main_page():
-    name = current_user.Username
-    return render_template('main_page.html', name=name)
+    msgs = Global_msgs.query.all()
+    # name = current_user.Username
+    return render_template('main_page.html', history_message=msgs)
 
 if __name__ == '__main__':
     socketio.run(app, host='172.20.10.2', debug=True)

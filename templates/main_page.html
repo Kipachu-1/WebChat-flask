@@ -81,7 +81,11 @@
             <a href="" class="bot_side_bar"><i class='bx bxs-brightness bx-lg'></i></a>
         </nav>
         
-        <div id="messages" class="chat"></div>
+        <div id="messages" class="chat">
+            {% for msg in history_message%}
+            <p>{{msg.Message}}</p>
+            {% endfor %}
+        </div>
         <div class="bottom_bar">
             <input class ="type_field usname" type="text" name="user_name" id="username" placeholder="Username" value={{name}}>
             <input class ="type_field" type="text" name="message" id="message" placeholder="Message">

@@ -1,4 +1,3 @@
-
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
 from flask_login import UserMixin
@@ -19,7 +18,16 @@ class User(UserMixin, db.Model):
         self.Username = Username
         
 
-# db.create_all()
+class Global_msgs(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    Message = db.Column(db.String())
+    
+    def __init__(self, Message):
+        self.Message = Message
+
+
+
+
 
 
 # print(User.query.filter_by(Username='Kipacho').all())
