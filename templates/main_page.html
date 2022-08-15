@@ -66,7 +66,7 @@
                         <div class="person_flashcard">
                             <i class='bx bxs-user-circle bx-lg sideB_avatar' style="color:white;"></i>
                             <p class="sideB_name">Almas</p>
-                            <p class="sideB_message">АХАХАХАХХАХАХАХАХАХАХАХАХАХАХХАХАХАХХА</p>
+                            <p class="sideB_message"></p>
                         </div>
                     </li>
                     <li class="3_member">
@@ -83,11 +83,16 @@
         
         <div id="messages" class="chat"></div>
         <div class="bottom_bar">
-            <input class ="type_field" type="text" name="user_name" id="username" placeholder="Username">
+            <input class ="type_field usname" type="text" name="user_name" id="username" placeholder="Username" value={{name}}>
             <input class ="type_field" type="text" name="message" id="message" placeholder="Message">
             <button id="SendBtn" class="send_btn">
                 <i class="fa-solid fa-arrow-right"></i>
             </button>
+
+
+
+
+
         </div>
         <script>
             let btn = document.querySelector("#btn");

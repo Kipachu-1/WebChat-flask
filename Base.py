@@ -11,7 +11,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     Username = db.Column(db.String(80), unique=True, nullable=False)
-    Password = db.Column(db.String(120), unique=True, nullable=False)  
+    Password = db.Column(db.String(120),nullable=False)  
     
     
     def __init__(self, Password, Username):
@@ -22,7 +22,11 @@ class User(UserMixin, db.Model):
 # db.create_all()
 
 
-# new_user = User(Username='Kipachu', Password='230279mm')
+# print(User.query.filter_by(Username='Kipacho').all())
+
+
+
+# new_user = User(Username='Aipachu', Password='230279am')
 # db.session.add(new_user)
 # db.session.commit()
 

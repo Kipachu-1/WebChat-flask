@@ -1,4 +1,3 @@
-from distutils.log import debug
 from flask import Flask, request, render_template, url_for, redirect, flash, session
 from flask_socketio import SocketIO, send
 from flask_sqlalchemy import SQLAlchemy
@@ -50,7 +49,38 @@ def login():
     return render_template('login_page2.html')
 
 
-@app.route('/SignUp', methods=)
+@app.route('/SignUp', methods=['POST', 'GET'])
+def SignUp():
+    if (request.method == "POST"):
+        New_Username = request.form.get('UsernameS')
+        Password1 = request.form.get('Password1')
+        Password2 = request.form.get('Password2')
+        check_db = User.query.filter_by(Username=New_Username).all()
+        if Password1 == Password2 and check_db == []:
+            New_User = User(Username=New_Username, Password=Password1)
+            db.session.add(New_User)
+            db.session.commit()
+            return redirect('login')
+        elif check_db != []:
+            flash('Username is taken')
+        elif Password1 != Password2:
+            flash('Please check passwords')
+        
+    return render_template('SignUp_page.html')
+
+
+@app.route('/')
+def intro_page():
+    return render_template()
+
+
+
+
+@app.route('/name')
+@login_required
+def name():
+    return current_user.Password
+       
 
 
 @app.route('/logout')
@@ -70,7 +100,9 @@ def arse():
     return render_template('assa.html')
 
 
-
+@app.route('/')
+def smt():
+    return 'it is the beginning, bro'
             
             
 @app.route('/wrong')
@@ -78,9 +110,11 @@ def wrong():
     return 'wrong pass or username!'            
                   
 
-@app.route('/')
+@app.route('/home')
+@login_required
 def main_page():
-    return render_template('main_page.html')
+    name = current_user.Username
+    return render_template('main_page.html', name=name)
 
 if __name__ == '__main__':
     socketio.run(app, host='172.20.10.2', debug=True)

@@ -200,3 +200,7 @@ ul{
         opacity: 0.5;
         font-weight: bolder;
       }
+
+.usname {
+    display: none;
+}
