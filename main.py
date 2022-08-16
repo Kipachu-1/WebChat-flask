@@ -40,7 +40,9 @@ def chat_page():
 
 
 
-
+@app.route('/')
+def intro_page():
+    return render_template('intro_page.html')
 
 
 
@@ -120,10 +122,11 @@ def wrong():
                   
 
 @app.route('/home')
+@login_required
 def main_page():
     msgs = Global_msgs.query.all()
-    # name = current_user.Username
-    return render_template('main_page.html', history_message=msgs)
+    name = current_user.Username
+    return render_template('main_page.html', history_message=msgs, name=name)
 
 if __name__ == '__main__':
     socketio.run(app, host='172.20.10.2', debug=True)
