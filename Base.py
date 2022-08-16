@@ -27,11 +27,13 @@ class Global_msgs(db.Model):
 
 
 
+# new_user1 = User(Username='Aipachu', Password='230279mm')
+# new_user2 = User(Username='Kipachu', Password='230279mm')
 
-
-
-# print(User.query.filter_by(Username='Kipacho').all())
-
+# # print(User.query.filter_by(Username='Kipacho').all())
+# db.session.add(new_user1)
+# db.session.add(new_user2)
+# db.session.commit()
 
 
 # new_user = User(Username='Aipachu', Password='230279am')

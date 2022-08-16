@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, url_for, redirect, flash, session
-from flask_socketio import SocketIO, send, emit
+from flask_socketio import SocketIO, send, emit, join_room, leave_room
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_required, logout_user, login_user, UserMixin, current_user
 from Base import *
@@ -25,18 +25,14 @@ def load_user(user_id):
 
 @socketio.on('message')
 def handle_message(message):
-    print('received message:' + message)
     msg = Global_msgs(Message=message)
     db.session.add(msg)
     db.session.commit()
-    if message != 'User Connected!':
-        send(message=message, broadcast=True)
+    send(message=message, broadcast=True)
 
-
-
-@socketio.on('another channel')
+@socketio.on('message', namespace='/chat')
 def handle_my_custom_event(message):
-    emit(message, namespace='/chat')
+    send(message, broadcast=True)
     
 @app.route('/chat')
 def chat_page():
@@ -123,8 +119,7 @@ def wrong():
     return 'wrong pass or username!'            
                   
 
-@app.route('/')
-# @login_required
+@app.route('/home')
 def main_page():
     msgs = Global_msgs.query.all()
     # name = current_user.Username

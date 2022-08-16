@@ -19,9 +19,6 @@
             $(document).ready(function() {
                 var socket = io.connect("http://172.20.10.2:5000")
                 var socket_chat = io("http://172.20.10.2:5000/chat")
-                socket.on('connect', function() {
-                    socket_chat.send('User Connected!');
-                });
 
                 socket_chat.on('message', function(data) {
                     $('#messages').append($('<p>').text(data));

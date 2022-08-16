@@ -22,13 +22,11 @@
         <script type="text/javascript">
             $(document).ready(function() {
                 var socket = io.connect("http://172.20.10.2:5000")
-                socket.on('connect', function() {
-                    socket.send('User Connected!');
-                });
 
                 socket.on('message', function(data) {
-                    $('#messages').append($('<p>').text(data));
-                    
+                    $('#messages').append($('<div class="message_box " id="message_box">'));
+                    $('#message_box').append($('<div class="message">').text(data)).find("div:last").css("text-align","left");
+        
                 });
 
                 $('#SendBtn').on('click', function() {
@@ -83,7 +81,7 @@
         
         <div id="messages" class="chat">
             {% for msg in history_message%}
-            <p>{{msg.Message}}</p>
+            <div class='message_box'><div class='message'>{{msg.Message}}</div></div>
             {% endfor %}
         </div>
         <div class="bottom_bar">

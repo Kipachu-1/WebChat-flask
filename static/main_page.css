@@ -1,14 +1,4 @@
-p{ 
-    font-family: 'Poppins', sans-serif;
-    font-size: 20px;/*шрифт 20px это дэфолт,удалить если не поменяем*/
-    font-weight: 600;/*можно по экспериментировать с font weight,border radius и max width , мб шрифт тоже*/
-    background-color: #ABC4FF;
-    border-radius: 30px;
-    padding: 20px;
-    max-width: 500px;
-    word-wrap: break-word; 
-    color: white;  
-}
+
 body {
     display: grid;
     background-color: #E2EAFC;
@@ -33,8 +23,10 @@ body {
     display: flex;
     grid-area: chat;
     flex-direction:column;
-    align-items: flex-end;/*надо поменять это чтобы отличить сообщения местами ,позже надо в отдельный класс запихнуть*/
+    /*надо поменять это чтобы отличить сообщения местами ,позже надо в отдельный класс запихнуть*/
     margin-right: 15px; 
+    align-items: flex-start;
+    width: 800px;
 }
 .bottom_bar{
     grid-area: bottom_bar;
@@ -201,6 +193,14 @@ ul{
         font-weight: bolder;
       }
 
-/* .usname {
-    display: none;
-} */
+.message_box {
+    width: 100%;
+    height: auto;
+    word-break: normal;
+}
+
+.message {
+    
+    text-align: right;
+}
+
