@@ -40,3 +40,12 @@ class Global_msgs(db.Model):
 # db.session.add(new_user)
 # db.session.commit()
 
+def Pfunction(function):
+    def wrapper(*args):
+        print(f'the called {function.__name__}')
+        function()  
+    wrapper()
+
+@Pfunction
+def Cfunction():
+    print('je')

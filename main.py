@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_required, logout_user, login_user, UserMixin, current_user
 from Base import *
 from wtforms import StringField, PasswordField, SubmitField
+from werkzeug.security import generate_password_hash, check_password_hash
 link1 = 'https://www.onlinetutorialspoint.com/flask/python-flask-login-form-example.html'
 link2 = 'https://iq.opengenus.org/login-page-in-flask/'
 
@@ -53,14 +54,14 @@ def login():
         Password = request.form.get('Password')
         try:
             user = User.query.filter_by(Username=f'{Username}').all()[0]
-            if Username == user.Username and Password == user.Password:
+            if check_password_hash(user.Password, Password):
                 login_user(user)
                 next = request.args.get('next')
                 return redirect(next)
             else:
                 flash('Invalid email or password', 'warning')
         except:
-            flash('Invalid email or password', 'warning')
+            flash('The username no here', 'warning')
     return render_template('login_page2.html')
 
 
@@ -72,7 +73,8 @@ def SignUp():
         Password2 = request.form.get('Password2')
         check_db = User.query.filter_by(Username=New_Username).all()
         if Password1 == Password2 and check_db == []:
-            New_User = User(Username=New_Username, Password=Password1)
+            Password_hash = generate_password_hash(Password1, method='pbkdf2:sha256', salt_length=20)
+            New_User = User(Username=New_Username, Password=Password_hash)
             db.session.add(New_User)
             db.session.commit()
             return redirect('login')
@@ -130,4 +132,9 @@ def main_page():
 
 if __name__ == '__main__':
     socketio.run(app, host='172.20.10.2', debug=True)
+    
+    
+    
+    
+    
     
