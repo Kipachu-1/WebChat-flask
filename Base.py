@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
 from flask_login import UserMixin
+from sqlalchemy.orm import relationship
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.sqlite3'
@@ -8,6 +9,7 @@ db = SQLAlchemy(app)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 class User(UserMixin, db.Model):
+    __tablename__ = 'UserInfo'
     id = db.Column(db.Integer, primary_key=True)
     Username = db.Column(db.String(80), unique=True, nullable=False)
     Password = db.Column(db.String(120),nullable=False)  
@@ -16,7 +18,14 @@ class User(UserMixin, db.Model):
     def __init__(self, Password, Username):
         self.Password = Password
         self.Username = Username
-        
+
+    
+
+
+
+
+
+
 
 class Global_msgs(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -40,12 +49,12 @@ class Global_msgs(db.Model):
 # db.session.add(new_user)
 # db.session.commit()
 
-def Pfunction(function):
-    def wrapper(*args):
-        print(f'the called {function.__name__}')
-        function()  
-    wrapper()
+# def Pfunction(function):
+#     def wrapper():
+#         print(f'the called {function.__name__}')
+#         function()  
+#     wrapper()
 
-@Pfunction
-def Cfunction():
-    print('je')
+# @Pfunction
+# def Cfunction():
+#     print('je')
