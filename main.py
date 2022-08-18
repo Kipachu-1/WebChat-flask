@@ -56,8 +56,11 @@ def login():
             user = User.query.filter_by(Username=f'{Username}').all()[0]
             if check_password_hash(user.Password, Password):
                 login_user(user)
-                next = request.args.get('next')
-                return redirect(next)
+                try:
+                    next = request.args.get('next')
+                    return redirect(next)
+                except:
+                    return redirect(main_page)
             else:
                 flash('Invalid email or password', 'warning')
         except:

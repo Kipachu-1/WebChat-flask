@@ -12,3 +12,82 @@ body{
  padding: 0px;
  margin: 0px;
 }
+
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro');
+p {
+  text-align: center;
+  border-right: solid 3px rgba(0,255,0,.75);
+  white-space: nowrap;
+  overflow: hidden;    
+  font-family: 'Source Code Pro', monospace;  
+  font-size: 28px;
+  color: rgba(255,255,255,.70);
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 36%;
+  left: 50%;
+}
+
+/* Animation */
+p {
+  animation: animated-text 4s steps(29,end) 1s 1 normal both,
+             animated-cursor 600ms steps(29,end) infinite;
+}
+
+/* text animation */
+
+@keyframes animated-text{
+  from{width: 0;}
+  to{width: 460px;}
+}
+
+/* cursor animations */
+
+@keyframes animated-cursor{
+  from{border-right-color: rgba(0,255,0,.75);}
+  to{border-right-color: transparent;}
+}
+
+.link {
+  text-decoration: none;
+  font-size: x-large;
+  color: aliceblue;
+  padding: 20px;
+  text-align: center;
+  background-color: #000000;
+  display: inline;
+  box-shadow: 5px 5px 1px 1px black;
+  transition: 0.5s;
+}
+.link:hover {
+  box-shadow: none;
+}
+
+
+.link1 {
+  margin-right: 24px;
+}
+.link2 {
+  margin-left: 24px;
+}
+.links {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  width: fit-content;
+}
+
+
+@media screen and (max-width: 480px) {
+    p {
+      font-size: 24px;
+
+    }
+
+    @keyframes animated-text{
+      from{width: 0;}
+      to{width: 400px;}
+    }
+}
+
