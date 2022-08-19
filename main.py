@@ -5,12 +5,12 @@ from flask_login import LoginManager, login_required, logout_user, login_user, U
 from Base import *
 from wtforms import StringField, PasswordField, SubmitField
 from werkzeug.security import generate_password_hash, check_password_hash
-
+import os
 
 
 app = Flask(__name__)
 app.secret_key = 'ajcinfuiehadiawd99481rr327982dj293'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.sqlite3'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", 'sqlite:///test.sqlite3')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 socketio = SocketIO(app, cors_allowed_origins='*')
 login_manager = LoginManager()
