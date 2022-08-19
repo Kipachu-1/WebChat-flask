@@ -5,11 +5,11 @@ from flask_login import LoginManager, login_required, logout_user, login_user, U
 from Base import *
 from wtforms import StringField, PasswordField, SubmitField
 from werkzeug.security import generate_password_hash, check_password_hash
-link1 = 'https://www.onlinetutorialspoint.com/flask/python-flask-login-form-example.html'
-link2 = 'https://iq.opengenus.org/login-page-in-flask/'
+
+
 
 app = Flask(__name__)
-app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+app.secret_key = 'ajcinfuiehadiawd99481rr327982dj293'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 socketio = SocketIO(app, cors_allowed_origins='*')
