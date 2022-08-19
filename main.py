@@ -9,7 +9,7 @@ import os
 
 
 app = Flask(__name__)
-app.secret_key = 'ajcinfuiehadiawd99481rr327982dj293'
+app.config['SEKRET_KEY'] = os.environ.get("SEKRET_KEY")
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", 'sqlite:///test.sqlite3')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 socketio = SocketIO(app, cors_allowed_origins='*')
