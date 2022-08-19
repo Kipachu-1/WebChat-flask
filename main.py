@@ -134,7 +134,7 @@ def main_page():
     return render_template('main_page.html', history_message=msgs, name=name)
 
 if __name__ == '__main__':
-    socketio.run(app, host='172.20.10.2', debug=True)
+    socketio.run(app, host='https://messenger-kipachu.herokuapp.com', debug=True)
     
     
     

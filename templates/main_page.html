@@ -21,7 +21,7 @@
     <body>
         <script type="text/javascript">
             $(document).ready(function() {
-                var socket = io.connect("http://172.20.10.2:5000")
+                var socket = io.connect("https://messenger-kipachu.herokuapp.com/home")
 
                 socket.on('message', function(data) {
                     $('#messages').append($('<div class="message_box " id="message_box">'));
