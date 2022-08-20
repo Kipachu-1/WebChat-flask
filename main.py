@@ -3,13 +3,12 @@ from flask_socketio import SocketIO, send, emit, join_room, leave_room
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_required, logout_user, login_user, UserMixin, current_user
 from Base import *
-from wtforms import StringField, PasswordField, SubmitField
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 
 
 app = Flask(__name__)
-app.config['SEKRET_KEY'] = os.environ.get("SEKRET_KEY")
+app.secret_key = 'hello'
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", 'sqlite:///test.sqlite3')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 socketio = SocketIO(app, cors_allowed_origins='*')
@@ -134,7 +133,7 @@ def main_page():
     return render_template('main_page.html', history_message=msgs, name=name)
 
 if __name__ == '__main__':
-    socketio.run(app, host='https://messenger-kipachu.herokuapp.com', debug=True)
+    socketio.run(app, host='172.20.10.2', debug=True)
     
     
     

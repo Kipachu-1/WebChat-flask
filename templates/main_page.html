@@ -21,22 +21,31 @@
     <body>
         <script type="text/javascript">
             $(document).ready(function() {
-                var socket = io.connect("https://messenger-kipachu.herokuapp.com/home")
+                var socket = io.connect("172.20.10.2:5000")
+                var div_name = '#messages'
+                var div_name2 = 'messages'
+
 
                 socket.on('message', function(data) {
-                    $('#messages').append($('<div class="message_box " id="message_box">'));
+                    $('#diva').append($('<div class="message_box " id="message_box">'));
                     $('#message_box').append($('<div class="message">').text(data)).find("div:last").css("text-align","left");
         
                 });
 
                 $('#SendBtn').on('click', function() {
-                    socket.send($('#username').val() + ': ' + $('#message').val());
+                    socket.send('{{name}}' + ': ' + $('#message').val());
                     $('#message').val('');
+                });
+
+                $('#SendBtn').on('click', function() {
+                    var div_name2 = 'diva'
+                    $(div_name).replaceWith('<div class="chat" id=' + div_name2  + '> </div>');
                 });
 
                 $("#message").keyup(function(event) {
                     if (event.which === 13) {
-                        $("#SendBtn").click();
+                        socket.send('{{name}}' + ': ' + $('#message').val());
+                        $('#message').val('');
                     }
                 });
 
@@ -44,71 +53,41 @@
 
             })
         </script>
-        <nav class="side_bar">
-            <a href="#" class="top_side_bar" id="btn"><i class="fa-solid fa-angles-right fa-2x" ></i></a>
-            <div class="sideB_search">
-                <i class='bx bx-search-alt bx-md search_icon'></i>
-                <input class="search_input" id="input_side_bar" type="text"  placeholder="Search...">
-                
+        <div class='whole page-chats'>
+        <div class='left-column'></div>
+
+        <div class='right-column'>
+            <div class='sidebar-header'>
+                <div class='chat-info-container'>
+                    <img class='avatar-photo' src="static/asaas.jpg">
+                    <div class='chat-info'><p class="chat-info-name">Name</p>
+                        <p class="chat-info-ago">minutes ago</p></div>
+                </div>
+                <div class='chat-utils'>
+                </div>
             </div>
-            <div class="chat_members_side_bar">
-                <ul>
-                    <li class="1_member">
-                        <div class="person_flashcard">
-                            <i class='bx bxs-user-circle bx-lg sideB_avatar' style="color:white;"></i>
-                            <p class="sideB_name">Arsen</p>
-                            <p class="sideB_message">Работай! че сидим?мне не нужен такой нигер</p>
-                        </div>
-                    </li>
-                    <li class="2_member">
-                        <div class="person_flashcard">
-                            <i class='bx bxs-user-circle bx-lg sideB_avatar' style="color:white;"></i>
-                            <p class="sideB_name">Almas</p>
-                            <p class="sideB_message"></p>
-                        </div>
-                    </li>
-                    <li class="3_member">
-                        <div class="person_flashcard">
-                            <i class='bx bxs-user-circle bx-lg sideB_avatar' style="color:white;"></i>
-                            <p class="sideB_name">Ayan</p>
-                            <p class="sideB_message">Я - гуль</p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <a href="" class="bot_side_bar"><i class='bx bxs-brightness bx-lg'></i></a>
-        </nav>
-        
+
+
+
+
         <div id="messages" class="chat">
             {% for msg in history_message%}
             <div class='message_box'><div class='message'>{{msg.Message}}</div></div>
             {% endfor %}
         </div>
         <div class="bottom_bar">
-            <input class ="type_field usname" type="text" name="user_name" id="username" placeholder="Username" value={{name}}>
+            <div class='sss'>
             <input class ="type_field" type="text" name="message" id="message" placeholder="Message">
             <button id="SendBtn" class="send_btn">
-                <i class="fa-solid fa-arrow-right"></i>
+                <i class="fa-solid fa-arrow-right arrow"></i>
             </button>
-
-
-
-
+            </div>
+        </div>
 
         </div>
-        <script>
-            let btn = document.querySelector("#btn");
-            let side_bar = document.querySelector(".side_bar");
-            let search_btn = document.querySelector(".search_input");
-            let search_field = document.querySelector(".search_icon");
-            
-            btn.onclick = function(){
-                side_bar.classList.toggle("active");
-                search_field.classList.toggle("active");
-                search_btn.classList.toggle("active");
-                document.getElementById("input_side_bar").focus();
-            }
-            
-        </script>
+        </div>
+    
+
+
     </body>
 </html>

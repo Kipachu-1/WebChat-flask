@@ -5,6 +5,7 @@ from sqlalchemy.orm import relationship
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.sqlite3'
+
 db = SQLAlchemy(app)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -33,28 +34,3 @@ class Global_msgs(db.Model):
     
     def __init__(self, Message):
         self.Message = Message
-
-
-
-# new_user1 = User(Username='Aipachu', Password='230279mm')
-# new_user2 = User(Username='Kipachu', Password='230279mm')
-
-# # print(User.query.filter_by(Username='Kipacho').all())
-# db.session.add(new_user1)
-# db.session.add(new_user2)
-# db.session.commit()
-
-
-# new_user = User(Username='Aipachu', Password='230279am')
-# db.session.add(new_user)
-# db.session.commit()
-
-# def Pfunction(function):
-#     def wrapper():
-#         print(f'the called {function.__name__}')
-#         function()  
-#     wrapper()
-
-# @Pfunction
-# def Cfunction():
-#     print('je')
