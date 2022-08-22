@@ -1,38 +1,28 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.js" integrity="sha512-9mpsATI0KClwt+xVZfbcf2lJ8IFBAwsubJ6mI3rtULwyM3fBmQFzj0It4tGqxLOGQwGfJdk/G+fANnxfq9/cew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    </head>
-    <body>
+{% extends 'main_page.html' %}
+        {% block head %}
+        {{ super() }}
+        {% endblock %}
+        {% block script %}
+        
         <script type="text/javascript">
             $(document).ready(function() {
                 var socket = io.connect("http://172.20.10.2:5000")
-                var socket_chat = io("http://172.20.10.2:5000/chat")
+                var socket_chat = io("http://172.20.10.2:5000/home/{{id}}")
+
 
                 socket_chat.on('message', function(data) {
-                    $('#messages').append($('<p>').text(data));
-                    
+                    $('#messages-area').append($('<div class="message_box" id="message_box"><div class="message">' + data + '</div></div>'));
                 });
 
                 $('#SendBtn').on('click', function() {
-                    socket_chat.send($('#username').val() + ': ' + $('#message').val());
+                    socket_chat.send($('#message').val());
                     $('#message').val('');
                 });
 
                 $("#message").keyup(function(event) {
                     if (event.which === 13) {
-                        $("#SendBtn").click();
+                        socket_chat.send($('#message').val());
+                        $('#message').val('');
                     }
                 });
 
@@ -40,14 +30,17 @@
 
             })
         </script>
-        <div id="messages" class="chat"></div>
-        <div class="bottom_bar">
-            <input class ="type_field usname" type="text" name="user_name" id="username" placeholder="Username" value={{name}}>
-            <input class ="type_field" type="text" name="message" id="message" placeholder="Message">
-            <button id="SendBtn" class="send_btn">
-                <i class="fa-solid fa-arrow-right"></i>
-            </button>
+        {% endblock  %}   
+
+
         
-        <script src="" async defer></script>
-    </body>
-</html>
+        {% block content %}
+        <div id="messages" class="chat">
+        <div class='messages-area' id='messages-area'>
+            {% for msg in chat_history%}
+            <div class='message_box'><div class='message'>{{msg.Message}}</div></div>
+            {% endfor %}
+        </div>
+        </div>
+        {% endblock %}
+        

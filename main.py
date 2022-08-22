@@ -1,7 +1,6 @@
 from flask import Flask, request, render_template, url_for, redirect, flash, session
 from flask_socketio import SocketIO, send, emit, join_room, leave_room
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, login_required, logout_user, login_user, UserMixin, current_user
+from flask_login import LoginManager, login_required, logout_user, login_user, current_user
 from Base import *
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
@@ -30,13 +29,30 @@ def handle_message(message):
     db.session.commit()
     send(message=message, broadcast=True)
 
-@socketio.on('message', namespace='/chat')
-def handle_my_custom_event(message):
-    send(message, broadcast=True)
-    
-@app.route('/chat')
-def chat_page():
-    return render_template('chat_page.html')
+
+@app.route('/home/<chatid>')
+@login_required
+def room_page(chatid):
+    class Chat_id(db.Model):
+        __table_args__ = {'extend_existing': True}
+        __tablename__ = f'chat{chatid}'
+        id = db.Column(db.Integer, primary_key=True)
+        Message = db.Column(db.String(), nullable=False)
+    if f"chat{chatid}" not in table_names:
+        Chat_id.__table__.create(db.session.bind)
+    chat_history = engine.connect().execute(f"SELECT Message FROM chat{chatid}") 
+    @socketio.on('message',  namespace=f'/home/{chatid}')
+    def handle_my_custom_event(message):
+        engine.connect().execute(f'INSERT INTO chat{chatid} (Message) VALUES ("{message}")')
+        send(message, broadcast=True)
+        
+    name = current_user.Username
+    return render_template('chat_page.html', name=name, id=chatid, chat_history=chat_history)
+
+
+
+
+
 
 
 
@@ -55,11 +71,7 @@ def login():
             user = User.query.filter_by(Username=f'{Username}').all()[0]
             if check_password_hash(user.Password, Password):
                 login_user(user)
-                try:
-                    next = request.args.get('next')
-                    return redirect(next)
-                except:
-                    return redirect(main_page)
+                return redirect('home')
             else:
                 flash('Invalid email or password', 'warning')
         except:
@@ -88,49 +100,22 @@ def SignUp():
     return render_template('SignUp_page.html')
 
 
-# @app.route('/')
-# def intro_page():
-#     return render_template()
-
-
-
-
-@app.route('/name')
-@login_required
-def name():
-    return current_user.Password
-       
-
 
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect('/login')
-
-@app.route('/res', methods=['POST', 'GET'])
-@login_required
-def res_page():
-    return render_template('assa.html')
-
-@app.route('/ars', methods=['POST', 'GET'])
-@login_required
-def arse():
-    return render_template('assa.html')
-
-            
-            
-@app.route('/wrong')
-def wrong():
-    return 'wrong pass or username!'            
+           
                   
 
 @app.route('/home')
 @login_required
 def main_page():
+    Users_block = User.query.all()
     msgs = Global_msgs.query.all()
     name = current_user.Username
-    return render_template('main_page.html', history_message=msgs, name=name)
+    return render_template('main_page.html', chat_history=msgs, name=name, Users_block=Users_block)
 
 if __name__ == '__main__':
     socketio.run(app, host='172.20.10.2', debug=True)

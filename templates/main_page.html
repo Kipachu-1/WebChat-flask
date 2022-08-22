@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html>
     <head>
+        {% block head %}
         <link rel="apple-touch-icon" sizes="180x180" href="static/icons/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="static/icons/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="static/icons/favicon-16x16.png">
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title></title>
+        <meta name="google" content="notranslate">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=no">
-        <link rel="stylesheet" href="static/main_page.css">
+        <link rel="stylesheet" href="{{url_for('static', filename = 'main_page.css')}}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
@@ -17,35 +19,33 @@
         <script src="https://kit.fontawesome.com/72e393fdc0.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.js" integrity="sha512-9mpsATI0KClwt+xVZfbcf2lJ8IFBAwsubJ6mI3rtULwyM3fBmQFzj0It4tGqxLOGQwGfJdk/G+fANnxfq9/cew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        {% endblock %}
     </head>
+
     <body>
+        {% block script %}
         <script type="text/javascript">
             $(document).ready(function() {
                 var socket = io.connect("172.20.10.2:5000")
-                var div_name = '#messages'
-                var div_name2 = 'messages'
+    
+                
 
-
+                
                 socket.on('message', function(data) {
-                    $('#diva').append($('<div class="message_box " id="message_box">'));
-                    $('#message_box').append($('<div class="message">').text(data)).find("div:last").css("text-align","left");
-        
+                    $('#messages-area').append($('<div class="message_box" id="message_box "><div class="message">' + data +'</div></div>'));   
                 });
 
                 $('#SendBtn').on('click', function() {
-                    socket.send('{{name}}' + ': ' + $('#message').val());
+                    socket.send($('#message').val());
                     $('#message').val('');
                 });
 
-                $('#SendBtn').on('click', function() {
-                    var div_name2 = 'diva'
-                    $(div_name).replaceWith('<div class="chat" id=' + div_name2  + '> </div>');
-                });
 
                 $("#message").keyup(function(event) {
                     if (event.which === 13) {
-                        socket.send('{{name}}' + ': ' + $('#message').val());
+                        socket.send($('#message').val());
                         $('#message').val('');
+                        $("#messages").scrollTop($("#messages")[0].scrollHeight);
                     }
                 });
 
@@ -53,12 +53,40 @@
 
             })
         </script>
+        {% endblock %}
+
+
         <div class='whole page-chats'>
-        <div class='left-column'></div>
+        {% block left_column %}
+        <div class='left-column'>
+            <div class='sidebar-header'><div class='SearchPlc side_d'>Search. Soon</div></div>
+            <div class="chat-list">
+                {% for User in Users_block%}
+                <div class="chat-block"><a class='chat-link' href='/home/{{name}}_{{User.Username}}'>{{User.Username}}</a></div>
+                {% endfor %}
+                <div class="chat-block"></div>
+                <div class="chat-block"></div>
+                <div class="chat-block"></div>
+                <div class="chat-block"></div>
+                <div class="chat-block"></div>
+                <div class="chat-block"></div>
+                <div class="chat-block"></div>
+                <div class="chat-block"></div>
+                <div class="chat-block"></div>
+                <div class="chat-block"></div>
+                <div class="chat-block"></div>
+                <div class="chat-block"></div>
+                <div class="chat-block"></div>
+                <div class="chat-block"></div>
+                <div class="chat-block"></div>
+                <div class="chat-block"></div>
+            </div>
+        </div>
+        {% endblock %}
 
         <div class='right-column'>
             <div class='sidebar-header'>
-                <div class='chat-info-container'>
+                <div class='chat-info-container side_d'>
                     <img class='avatar-photo' src="static/asaas.jpg">
                     <div class='chat-info'><p class="chat-info-name">Name</p>
                         <p class="chat-info-ago">minutes ago</p></div>
@@ -66,18 +94,19 @@
                 <div class='chat-utils'>
                 </div>
             </div>
-
-
-
-
-        <div id="messages" class="chat">
-            {% for msg in history_message%}
+            {% block content %}
+            <div id="messages" class="chat">
+            <div class='messages-area' id='messages-area'>   
+            {% for msg in chat_history%}
             <div class='message_box'><div class='message'>{{msg.Message}}</div></div>
             {% endfor %}
-        </div>
+            </div>    
+            </div>
+            {% endblock %}
+
         <div class="bottom_bar">
             <div class='sss'>
-            <input class ="type_field" type="text" name="message" id="message" placeholder="Message">
+            <input class ="type_field" type="text" name="message" id="message" placeholder="Message" max>
             <button id="SendBtn" class="send_btn">
                 <i class="fa-solid fa-arrow-right arrow"></i>
             </button>
