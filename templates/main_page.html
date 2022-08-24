@@ -2,11 +2,13 @@
 <html>
     <head>
         {% block head %}
-        <link rel="apple-touch-icon" sizes="180x180" href="static/icons/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="static/icons/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="static/icons/favicon-16x16.png">
+        <link rel="apple-touch-icon" sizes="180x180" href=" {{url_for('static', filename = '/icons/apple-touch-icon.png')}}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{url_for('static', filename = '/icons/favicon-32x32.png')}} ">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{url_for('static', filename = '/icons/favicon-16x16.png')}}">
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover user-scalable=no">
+        <meta name="viewport" content="maximum-scale=1.0, user-scalable=no">
         <title></title>
         <meta name="google" content="notranslate">
         <meta name="description" content="">
@@ -32,12 +34,17 @@
 
                 
                 socket.on('message', function(data) {
-                    $('#messages-area').append($('<div class="message_box" id="message_box "><div class="message">' + data +'</div></div>'));   
+                    $('#messages-area').append($('<div class="message_box" id="message_box "><div class="message">' + data +'</div></div>'));     
                 });
 
                 $('#SendBtn').on('click', function() {
-                    socket.send($('#message').val());
-                    $('#message').val('');
+                    if ($('#message').val() != '') {
+                        socket.send($('#message').val());
+                        $('#message').val('');
+                        $("#messages").scrollTop($("#messages")[0].scrollHeight);
+                      } 
+
+
                 });
 
 
@@ -50,6 +57,9 @@
                 });
 
 
+                
+
+
 
             })
         </script>
@@ -57,14 +67,14 @@
 
 
         <div class='whole page-chats'>
-        {% block left_column %}
+
         <div class='left-column'>
             <div class='sidebar-header'><div class='SearchPlc side_d'>Search. Soon</div></div>
             <div class="chat-list">
                 {% for User in Users_block%}
-                <div class="chat-block"><a class='chat-link' href='/home/{{name}}_{{User.Username}}'>{{User.Username}}</a></div>
+                <div class="chat-block"><a class='chat-link' href='/home/{{User["uni_id"]}}'>{{User['name']}}</a></div>
                 {% endfor %}
-                <div class="chat-block"></div>
+                <div class="chat-block"><a class='chat-link' href='{{url_for("main_page")}}'>Local {{last_message}}</a></div>
                 <div class="chat-block"></div>
                 <div class="chat-block"></div>
                 <div class="chat-block"></div>
@@ -82,13 +92,15 @@
                 <div class="chat-block"></div>
             </div>
         </div>
-        {% endblock %}
+
 
         <div class='right-column'>
             <div class='sidebar-header'>
                 <div class='chat-info-container side_d'>
-                    <img class='avatar-photo' src="static/asaas.jpg">
-                    <div class='chat-info'><p class="chat-info-name">Name</p>
+                    <img class='avatar-photo' src="{{url_for('static', filename = 'asaas.jpg')}}">
+                    {% block chat_info_name %}
+                    <div class='chat-info'><p class="chat-info-name">Local</p>
+                    {% endblock %}
                         <p class="chat-info-ago">minutes ago</p></div>
                 </div>
                 <div class='chat-utils'>
@@ -108,7 +120,7 @@
             <div class='sss'>
             <input class ="type_field" type="text" name="message" id="message" placeholder="Message" max>
             <button id="SendBtn" class="send_btn">
-                <i class="fa-solid fa-arrow-right arrow"></i>
+                S
             </button>
             </div>
         </div>

@@ -1,9 +1,9 @@
+
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
 from flask_login import UserMixin
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine, inspect
-
 
 
 app = Flask(__name__)
@@ -21,8 +21,8 @@ table_names = insp.get_table_names()
 class User(UserMixin, db.Model):
     __tablename__ = 'UserInfo'
     id = db.Column(db.Integer, primary_key=True)
-    Username = db.Column(db.String(80), unique=True, nullable=False)
-    Password = db.Column(db.String(120),nullable=False)  
+    Username = db.Column(db.String(20), unique=True, nullable=False)
+    Password = db.Column(db.String(16),nullable=False)  
     
     
     def __init__(self, Password, Username):
@@ -37,8 +37,14 @@ class Global_msgs(db.Model):
     def __init__(self, Message):
         self.Message = Message
         
-        
-        
+
+
 
     
+
+
+
+
+
+
 
