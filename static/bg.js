@@ -9,7 +9,7 @@ var w = window.innerWidth,
     size = 7,
     speed = 20,
     parts = new Array,
-    colors = ['#ff0aff','#f57900','#cd00cd','#ce5c00','#9C9EFE'];
+    colors = ['#ff0aff','#B9FFF8','#cd00cd','#00FFAB','#9C9EFE'];
 var mouse = { x: 0, y: 0 };
 
 canvas.setAttribute('width',w);
@@ -73,9 +73,6 @@ function particles() {
 function MouseMove(e) {
    mouse.x = e.layerX;
    mouse.y = e.layerY;
-
-   //context.fillRect(e.layerX, e.layerY, 5, 5);
-   //Draw( e.layerX, e.layerY );
 }
 function DistanceBetween(p1,p2) {
    var dx = p2.x-p1.x;

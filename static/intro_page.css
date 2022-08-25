@@ -28,20 +28,20 @@ p {
   left: 50%;
 }
 
-/* Animation */
+
 p {
   animation: animated-text 4s steps(29,end) 1s 1 normal both,
              animated-cursor 600ms steps(29,end) infinite;
 }
 
-/* text animation */
+
 
 @keyframes animated-text{
   from{width: 0;}
   to{width: 460px;}
 }
 
-/* cursor animations */
+
 
 @keyframes animated-cursor{
   from{border-right-color: rgba(0,255,0,.75);}
@@ -64,18 +64,18 @@ p {
 }
 
 
-.link1 {
-  margin-right: 24px;
+.link1, .link2 {
+    margin: 0 30px;
 }
-.link2 {
-  margin-left: 24px;
-}
+
 .links {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
   width: fit-content;
+  display: flex;
+  flex-direction: row;
 }
 
 

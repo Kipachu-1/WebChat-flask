@@ -16,17 +16,23 @@
 
                
                 $('#SendBtn').on('click', function() {
-                    socket_chat.send($('#message').val());
-                    $('#message').val('');
-                });
-
-                
-
-                $("#message").keyup(function(event) {
-                    if (event.which === 13) {
+                    if ($('#message').val() !== '') {
                         socket_chat.send($('#message').val());
                         $('#message').val('');
                         $("#messages").scrollTop($("#messages")[0].scrollHeight);
+                      } 
+
+
+                });
+
+
+                $("#message").keyup(function(event) {
+                    if (event.which === 13) {
+                        if ($('#message').val() !== '') {
+                            socket_chat.send($('#message').val());
+                            $('#message').val('');
+                            $("#messages").scrollTop($("#messages")[0].scrollHeight);
+                          } 
                     }
                 });
 
@@ -48,8 +54,9 @@
 
 
 
-        {% block chat_info_name %}
-                <div class='chat-info'><p class="chat-info-name">{{Cut_name}}</p>
+        {% block chat_info %}
+        <img class='avatar-photo' src="{{url_for("static", filename = 'Users_avatar/')}}{{ User_avatar }}">
+        <div class='chat-info'><p class="chat-info-name">{{Cut_name}}</p>
         {% endblock %}
 
         {% block content %}

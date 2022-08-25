@@ -8,8 +8,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover user-scalable=no">
-        <meta name="viewport" content="maximum-scale=1.0, user-scalable=no">
-        <title></title>
+        <title>WebChat</title>
         <meta name="google" content="notranslate">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=no">
@@ -27,19 +26,22 @@
     <body>
         {% block script %}
         <script type="text/javascript">
+
+
+            
             $(document).ready(function() {
                 var socket = io.connect("172.20.10.2:5000")
     
                 
 
-                
+    
                 socket.on('message', function(data) {
                     $('#messages-area').append($('<div class="message_box" id="message_box "><div class="message">' + data +'</div></div>'));     
                 });
 
                 $('#SendBtn').on('click', function() {
-                    if ($('#message').val() != '') {
-                        socket.send($('#message').val());
+                    if ($('#message').val() !== '') {
+                        socket.send($('#sender_name').val() + ':'+ $('#message').val());
                         $('#message').val('');
                         $("#messages").scrollTop($("#messages")[0].scrollHeight);
                       } 
@@ -50,14 +52,14 @@
 
                 $("#message").keyup(function(event) {
                     if (event.which === 13) {
-                        socket.send($('#message').val());
-                        $('#message').val('');
-                        $("#messages").scrollTop($("#messages")[0].scrollHeight);
+                        if ($('#message').val() !== '') {
+                            socket.send($('#message').val());
+                            $('#message').val('');
+                            $("#messages").scrollTop($("#messages")[0].scrollHeight);
+                          } 
                     }
                 });
 
-
-                
 
 
 
@@ -69,10 +71,15 @@
         <div class='whole page-chats'>
 
         <div class='left-column'>
-            <div class='sidebar-header'><div class='SearchPlc side_d'>Search. Soon</div></div>
+            <div class='sidebar-header'>
+                <div class='setting'></div>
+                <div class='SearchPlc side_d'>Search. Soon</div>
+            </div>
             <div class="chat-list">
                 {% for User in Users_block%}
+                {% if User['name'] != name %}
                 <div class="chat-block"><a class='chat-link' href='/home/{{User["uni_id"]}}'>{{User['name']}}</a></div>
+                {% endif %}
                 {% endfor %}
                 <div class="chat-block"><a class='chat-link' href='{{url_for("main_page")}}'>Local {{last_message}}</a></div>
                 <div class="chat-block"></div>
@@ -97,8 +104,8 @@
         <div class='right-column'>
             <div class='sidebar-header'>
                 <div class='chat-info-container side_d'>
+                    {% block chat_info %}
                     <img class='avatar-photo' src="{{url_for('static', filename = 'asaas.jpg')}}">
-                    {% block chat_info_name %}
                     <div class='chat-info'><p class="chat-info-name">Local</p>
                     {% endblock %}
                         <p class="chat-info-ago">minutes ago</p></div>
@@ -118,6 +125,7 @@
 
         <div class="bottom_bar">
             <div class='sss'>
+            <input class='sender_name' type='text' name='sender_name' id='sender_name' value={{name}}>
             <input class ="type_field" type="text" name="message" id="message" placeholder="Message" max>
             <button id="SendBtn" class="send_btn">
                 S

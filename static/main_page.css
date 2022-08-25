@@ -4,6 +4,7 @@ body {
     overflow-y: hidden;
     scroll-behavior: smooth;
     background-color: rgb(31, 4, 77);
+    font-family: Arial, Helvetica, sans-serif;
 }
 .send_btn {
     width: 60px;
@@ -13,10 +14,7 @@ body {
     border: none;
 }
 .whole {
-
     height: 100vh;
-    max-width: 1680px;
-    width: 100%;
     display: flex;
     flex-direction: row;
 }
@@ -138,13 +136,10 @@ body {
 
 .left-column > .sidebar-header {
     margin-bottom: 14px;
+
 }
 
 
-.left-column {
-    height: 100%;
-    margin: auto auto;
-}
 .chat-info {
     color: rgb(255, 255, 255);
     margin: auto 10px;
@@ -160,7 +155,7 @@ body {
 }
 
 .avatar-photo {
-    width: 44px;
+    width: 50px;
     border-radius: 20px;
     margin: auto 6px;
 }
@@ -224,7 +219,6 @@ body {
     width: 100%;
     margin-bottom: 8px;
     display: flex;
-    /* justify-content: flex-end; */
 }
   
 
@@ -235,6 +229,20 @@ body {
     color: white;
 }
 
+.sender_name {
+    display: none;
+}
+
+.setting {
+    position: absolute;
+    left: 9px;
+    top: 6px;
+    width: 65px;
+    aspect-ratio: 1/1;
+    border-radius: 10px; 
+}
+
+
 
 
 
@@ -242,9 +250,9 @@ body {
     body {
         width: 100%;
     }
-    
+
     .message_box {
-        margin-left: 10px;
+        margin-left: 20px;
     }
     .sss {
         width: 96%;
@@ -258,15 +266,8 @@ body {
         z-index: 100;
     }
 
-    .left-column {
-        width: 100%;
-    }
-
     .right-column > .sidebar-header {
         margin-bottom: 20px;
-    }
-    .right-column {
-        width: 100%;
     }
 
     .send_btn {
@@ -283,3 +284,8 @@ body {
     }
 }
 
+@media only screen and (max-width: 812px) {
+    .right-column {
+        width: 57vh;
+    }
+}

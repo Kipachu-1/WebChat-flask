@@ -1,10 +1,9 @@
-from argparse import Namespace
-from typing import List
-from flask import Flask, request, render_template, url_for, redirect, flash, session
-from flask_socketio import SocketIO, send, emit, join_room, leave_room
+from flask import Flask, request, render_template, url_for, redirect, flash, abort
+from flask_socketio import SocketIO, send
 from flask_login import LoginManager, login_required, logout_user, login_user, current_user
 from Base import *
 from werkzeug.security import generate_password_hash, check_password_hash
+import random
 import os
 
 
@@ -19,10 +18,6 @@ db.init_app(app)
 login_manager.login_view = 'login'
 login_manager.login_message = 'Please login'
 
-
-
-
-
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
@@ -36,14 +31,9 @@ def handle_message(message):
     db.session.commit()
     send(message=message, broadcast=True)
     
-    
-
-@app.route('/home/<chatid>')
-@login_required
-def room_page(chatid):
+def gene_chat_id(name):
     Users_block = User.query.all()
-    LIST = []
-    name = current_user.Username
+    list = []
     for i in Users_block:
         list2 = [i.Username, name]
         list2 = sorted(list2)
@@ -52,7 +42,27 @@ def room_page(chatid):
             'name' : i.Username,
             'uni_id': uni_id
         }
-        LIST.append(dict1)
+        list.append(dict1) 
+    return list
+
+
+@app.route('/')
+def intro_page():
+    return render_template('intro_page.html')
+
+    
+@app.route('/home')
+@login_required
+def main_page():
+    msgs = Global_msgs.query.all()
+    name = current_user.Username
+    return render_template('main_page.html', chat_history=msgs, name=name, Users_block=gene_chat_id(name))
+
+
+@app.route('/home/<chatid>')
+@login_required
+def room_page(chatid):
+    name = current_user.Username
     
     if f"{chatid}" not in table_names:
         class Chat_id(db.Model):
@@ -64,22 +74,21 @@ def room_page(chatid):
             Chat_id.__table__.create(db.session.bind)
         except: 
             pass
-        
     chat_history = engine.connect().execute(f"SELECT Message FROM {chatid}") 
     @socketio.on('message',  namespace=f'/home/{chatid}')
     def handle_my_custom_event(message):
         engine.connect().execute(f'INSERT INTO {chatid} (Message) VALUES ("{message}")')
         send(message, broadcast=True)
-        
     Cut_name = str(chatid).replace('_', '')
     Cut_name = Cut_name.replace(name, '')
-    return render_template('chat_page.html', name=name, id=chatid, chat_history=chat_history,
-                           Cut_name=Cut_name, Users_block=LIST,)
+    User_avatar = str(User.query.filter_by(Username=Cut_name).all()[0].Image_id) + '.jpg'
+    if name not in chatid:
+        return abort(404)
+    else:
+        return render_template('chat_page.html', name=name, id=chatid, chat_history=chat_history,
+                           Cut_name=Cut_name, Users_block=gene_chat_id(name), User_avatar=User_avatar)
 
 
-@app.route('/')
-def intro_page():
-    return render_template('intro_page.html')
 
 
 
@@ -109,7 +118,7 @@ def SignUp():
         check_db = User.query.filter_by(Username=New_Username).all()
         if Password1 == Password2 and check_db == []:
             Password_hash = generate_password_hash(Password1, method='pbkdf2:sha256', salt_length=20)
-            New_User = User(Username=New_Username, Password=Password_hash)
+            New_User = User(Username=New_Username, Password=Password_hash, Image_id=random.randint(1, 9))
             db.session.add(New_User)
             db.session.commit()
             return redirect('login')
@@ -127,31 +136,10 @@ def SignUp():
 def logout():
     logout_user()
     return redirect('/login')
-                     
-                                 
-@app.route('/home')
-@login_required
-def main_page():
-    Users_block = User.query.all()
-    msgs = Global_msgs.query.all()
-    name = current_user.Username
-    LIST = []
-    for i in Users_block:
-        list2 = [i.Username, name]
-        list2 = sorted(list2)
-        uni_id = list2[0] + '_' + list2[1]
-        dict1 = {
-            'name' : i.Username,
-            'uni_id': uni_id
-        }
-        LIST.append(dict1)
-        
-    return render_template('main_page.html', chat_history=msgs, name=name, Users_block=LIST)
 
 
 
-
-
+                            
 
 if __name__ == '__main__':
     socketio.run(app, host='172.20.10.2', debug=True)
