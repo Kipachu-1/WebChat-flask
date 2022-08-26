@@ -53,7 +53,7 @@
                 $("#message").keyup(function(event) {
                     if (event.which === 13) {
                         if ($('#message').val() !== '') {
-                            socket.send($('#message').val());
+                            socket.send($('#sender_name').val() + ':' + $('#message').val());
                             $('#message').val('');
                             $("#messages").scrollTop($("#messages")[0].scrollHeight);
                           } 
@@ -78,10 +78,16 @@
             <div class="chat-list">
                 {% for User in Users_block%}
                 {% if User['name'] != name %}
-                <div class="chat-block"><a class='chat-link' href='/home/{{User["uni_id"]}}'>{{User['name']}}</a></div>
+                <div class="chat-block"><a class='chat-link' href='/home/{{User["uni_id"]}}'>
+                    <img class='avatar-photo' src="{{url_for("static", filename = 'Users_avatar/')}}{{ User.Image_id + '.jpg' }}">
+                    <p>{{User['name']}}</p>
+                </a></div>
                 {% endif %}
                 {% endfor %}
-                <div class="chat-block"><a class='chat-link' href='{{url_for("main_page")}}'>Local {{last_message}}</a></div>
+                <div class="chat-block"><a class='chat-link' href='{{url_for("main_page")}}'>
+                    <img class='avatar-photo' src="{{url_for('static', filename = 'asaas.jpg')}}">
+                    <p>Local</p>
+                </a></div>
                 <div class="chat-block"></div>
                 <div class="chat-block"></div>
                 <div class="chat-block"></div>

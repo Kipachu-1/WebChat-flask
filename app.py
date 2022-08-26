@@ -40,7 +40,8 @@ def gene_chat_id(name):
         uni_id = list2[0] + '_' + list2[1]
         dict1 = {
             'name' : i.Username,
-            'uni_id': uni_id
+            'uni_id': uni_id,
+            'Image_id': str(i.Image_id)
         }
         list.append(dict1) 
     return list
@@ -81,7 +82,7 @@ def room_page(chatid):
         send(message, broadcast=True)
     Cut_name = str(chatid).replace('_', '')
     Cut_name = Cut_name.replace(name, '')
-    User_avatar = str(User.query.filter_by(Username=Cut_name).all()[0].Image_id) + '.jpg'
+    User_avatar = str(User.query.filter_by(Username=Cut_name).all()[0].Image_id)
     if name not in chatid:
         return abort(404)
     else:
@@ -118,7 +119,7 @@ def SignUp():
         check_db = User.query.filter_by(Username=New_Username).all()
         if Password1 == Password2 and check_db == []:
             Password_hash = generate_password_hash(Password1, method='pbkdf2:sha256', salt_length=20)
-            New_User = User(Username=New_Username, Password=Password_hash, Image_id=random.randint(1, 9))
+            New_User = User(Username=New_Username, Password=Password_hash, Image_id=random.randint(1, 8))
             db.session.add(New_User)
             db.session.commit()
             return redirect('login')

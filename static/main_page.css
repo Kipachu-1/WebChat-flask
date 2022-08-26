@@ -227,6 +227,25 @@ body {
     height: 100%;
     text-decoration: none;
     color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+
+.chat-link > p {
+    margin: auto 5px;
+}
+
+
+.chat-link > img {
+    margin-left: 10px;
+    border-radius: 50%;
+}
+
+
+.right-column > .sidebar-header {
+    margin-bottom: 16px;
 }
 
 .sender_name {

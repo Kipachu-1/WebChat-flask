@@ -55,7 +55,7 @@
 
 
         {% block chat_info %}
-        <img class='avatar-photo' src="{{url_for("static", filename = 'Users_avatar/')}}{{ User_avatar }}">
+        <img class='avatar-photo' src="{{url_for("static", filename = 'Users_avatar/')}}{{ User_avatar + '.jpg' }}">
         <div class='chat-info'><p class="chat-info-name">{{Cut_name}}</p>
         {% endblock %}
 
